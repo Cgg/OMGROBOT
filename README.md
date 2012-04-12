@@ -51,7 +51,7 @@ will be encouraged to change it if he/she feels the need.
 Odometry
 --------
 
-*To do* : everything.
+*ToDo* : test
 
 The robot's odometry is implemented following this [Wikipedia
 page](http://fr.wikipedia.org/wiki/Odom%C3%A9trie "sorry for the french").
@@ -61,7 +61,7 @@ The robot's position is described by two parameters :
  - its center's position, a point (cf. up there)
  - its nose's orientation, in radians.
 
-These parameters are updated every 100ms.
+These parameters are updated every 10ms.
 
 
 Representation
