@@ -50,15 +50,15 @@ Robot.prototype.updatePosition = function()
     var radius      = ( Robot.width / 2 ) *
                       ( ( leftSpeed + rightSpeed ) / ( rightSpeed - leftSpeed ) );
 
-    var x_o = this.origin.x - radius * Math.sin( this.orientation );
+    var x_o = this.origin.x + radius * Math.sin( this.orientation );
     var y_o = this.origin.y - radius * Math.cos( this.orientation );
 
     var dtheta = ( originSpeed / radius ) * Robot.dtUpdate;
 
-    this.orientation += dtheta;
+    this.orientation -= dtheta;
 
     // here we use the updated orientation
-    this.origin.x = x_o + radius * Math.sin( this.orientation );
+    this.origin.x = x_o - radius * Math.sin( this.orientation );
     this.origin.y = y_o + radius * Math.cos( this.orientation );
   }
 };
