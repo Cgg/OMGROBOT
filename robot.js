@@ -41,7 +41,7 @@ Robot.prototype.setRightPw = function( level )
 /* Update the robot's position and orientation given the wheels speeds. */
 Robot.prototype.updatePosition = function()
 {
-  if( this.leftPw > 0 || this.rightPw > 0 )
+  if( ( this.leftPw != this.rightPw ) && ( this.leftPw != -this.rightPw ) )
   {
     var leftSpeed  = this.leftPw * Robot.wheelMaxSpeed;
     var rightSpeed = this.rightPw * Robot.wheelMaxSpeed;
@@ -60,6 +60,24 @@ Robot.prototype.updatePosition = function()
     // here we use the updated orientation
     this.origin.x = x_o - radius * Math.sin( this.orientation );
     this.origin.y = y_o + radius * Math.cos( this.orientation );
+  }
+  else if( this.leftPw != 0 )
+  {
+    if( this.rightPw == - this.leftPw )
+    {
+      // special case to handle
+      var speed = this.leftPw * Robot.wheelMaxSpeed;
+      var dtheta = ( speed / ( Robot.width / 2 ) ) * Robot.dtUpdate;
+      this.orientation += dtheta;
+    }
+    else
+    {
+      var speed  = this.leftPw * Robot.wheelMaxSpeed;
+      var d      = speed * Robot.dtUpdate;
+
+      this.origin.x = this.origin.x + d * Math.cos( this.orientation );
+      this.origin.y = this.origin.y + d * Math.sin( this.orientation );
+    }
   }
 };
 
