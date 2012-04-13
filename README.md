@@ -24,8 +24,8 @@ Direct access to the motors
 
 The motors can be controlled directly through these functions :
 
- - `SetLeftSp( float )`
- - `SetRightSp( float )`
+ - `SetLeftPw( float )`
+ - `SetRightPw( float )`
 
 The motors will then run until another command stopping them is issued. The
 single argument is the power percentage to be used, and it can range from 0
