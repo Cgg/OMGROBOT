@@ -15,7 +15,9 @@ Other modules could be added in the future (e.g. bumpers or proximity sensor)
 How to control the robot
 ------------------------
 
-*To do* : everything.
+*To do* :
+ - low level API : done
+ - GoTo, GoThrough : _to do_
 
 Direct access to the motors
 ===========================
@@ -51,7 +53,7 @@ will be encouraged to change it if he/she feels the need.
 Odometry
 --------
 
-*ToDo* : test
+*ToDo* : done
 
 The robot's odometry is implemented following this [Wikipedia
 page](http://fr.wikipedia.org/wiki/Odom%C3%A9trie "sorry for the french").
@@ -76,3 +78,12 @@ The robot is schematically drawn in a canvas.
 The user can plan its path by drawing it, and has a visual feedback of the
 motors power levels through two sliders. He can also directly control the robot
 using a joystick or the keyboard's arrows.
+
+
+Robot's control from the user point of view
+-------------------------------------------
+
+*To do* :
+ - binding with the keyboard's arrows : done
+ - joystick : _to do_
+ - mouse (path drawing) : _to do_
