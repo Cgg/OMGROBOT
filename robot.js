@@ -25,23 +25,26 @@ function Robot( firstOrigin, firstOrientation )
 /* Update the robot's position and orientation given the wheels speeds. */
 Robot.prototype.updatePosition = function()
 {
-  var leftSpeed  = this.leftPw * Robot.wheelMaxSpeed;
-  var rightSpeed = this.rightPw * Robot.wheelMaxSpeed;
+  if( this.leftPw > 0 || this.rightPw > 0 )
+  {
+    var leftSpeed  = this.leftPw * Robot.wheelMaxSpeed;
+    var rightSpeed = this.rightPw * Robot.wheelMaxSpeed;
 
-  var originSpeed = ( leftSpeed + rightSpeed ) / 2;
-  var radius      = ( Robot.width / 2 ) *
-                    ( ( leftSpeed + rightSpeed ) / ( rightSpeed - leftSpeed ) );
+    var originSpeed = ( leftSpeed + rightSpeed ) / 2;
+    var radius      = ( Robot.width / 2 ) *
+                      ( ( leftSpeed + rightSpeed ) / ( rightSpeed - leftSpeed ) );
 
-  var x_o = this.origin.x - radius * Math.sin( this.orientation );
-  var y_o = this.origin.y - radius * Math.cos( this.orientation );
+    var x_o = this.origin.x - radius * Math.sin( this.orientation );
+    var y_o = this.origin.y - radius * Math.cos( this.orientation );
 
-  var dtheta = ( originSpeed / radius ) * Robot.dtUpdate;
+    var dtheta = ( originSpeed / radius ) * Robot.dtUpdate;
 
-  this.orientation += dtheta;
+    this.orientation += dtheta;
 
-  // here we use the updated orientation
-  this.origin.x = x_o + radius * Math.sin( this.orientation );
-  this.origin.y = y_o + radius * Math.cos( this.orientation );
+    // here we use the updated orientation
+    this.origin.x = x_o + radius * Math.sin( this.orientation );
+    this.origin.y = y_o + radius * Math.cos( this.orientation );
+  }
 };
 
 /* Draw a schematic robot in the given 2d context. */
