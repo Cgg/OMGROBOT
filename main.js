@@ -29,9 +29,43 @@ init = function()
   h_canvas.addEventListener( "mouseup"  , onMouseUp  , false );
   h_canvas.addEventListener( "mousemove", onMouseMove, false );
 
-  robot = new Robot( new Point( 50, 70 ), 2 );
+  keyboard = new Keyboard( window );
 
+  robot = new Robot( new Point( 200, 300 ), 0 );
+
+  setInterval( getUserInput, 100 );
   setInterval( draw, REFRESH_RATE );
+};
+
+
+getUserInput = function()
+{
+  var l = 0;
+  var r = 0;
+
+  if( keyboard.isKeyDown( 38 ) ) // up arrow
+  {
+    l = 1;
+    r = 1;
+  }
+  else if( keyboard.isKeyDown( 37 ) ) // left
+  {
+    l = -1;
+    r = 1;
+  }
+  else if( keyboard.isKeyDown( 39 ) ) // right
+  {
+    l = 1;
+    r = -1;
+  }
+  else if( keyboard.isKeyDown( 40 ) ) // down
+  {
+    l = -0.5;
+    r = -0.5;
+  }
+
+  robot.setLeftPw( l );
+  robot.setRightPw( r );
 };
 
 
