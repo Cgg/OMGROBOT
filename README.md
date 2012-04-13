@@ -67,7 +67,9 @@ These parameters are updated every 10ms.
 Representation
 --------------
 
-*To do* : everything.
+*To do* :
+ - Robot.draw : _to test_
+ - rest of the world (grid, axis, robot's info panel) : _to do_
 
 The robot is schematically drawn in a canvas.
 
