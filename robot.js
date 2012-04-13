@@ -30,7 +30,7 @@ Robot.prototype.setLeftPw = function( level )
   }
 };
 
-Robot.prototype.setLeftPw = function( level )
+Robot.prototype.setRightPw = function( level )
 {
   if( level <= 1 && level >= -1 )
   {
