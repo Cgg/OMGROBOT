@@ -5,7 +5,7 @@
 
 /* Constants relative to the robot */
 Robot.wheelMaxSpeed = 20;  // pixels/second
-Robot.width         = 20;  // pixels
+Robot.width         = 40;  // pixels
 Robot.dtUpdate      = 1 / 100 ; // s
 
 /* build a robot, given its point of origin and its first orientation */
@@ -50,24 +50,26 @@ Robot.prototype.updatePosition = function()
 /* Draw a schematic robot in the given 2d context. */
 Robot.prototype.draw = function( ctx )
 {
-  2dCtx.save();
+  ctx.save();
 
-  2dCtx.fillStyle = "#FF9100"
-  2dCtx.strokeStye = "#000000"
+  ctx.fillStyle = "#FF9100"
+  ctx.strokeStye = "#FFFFFF"
 
-  2dCtx.translate( this.origin.x, this.origin.y );
-  2dCtx.rotate( this.orientation );
+  ctx.translate( this.origin.x, this.origin.y );
+  ctx.rotate( this.orientation );
 
+  var rw  = Robot.width
   var rw2 = Robot.width / 2;
 
-  2dCtx.fillRect( - rw2, -rw2, rw2, rw2 );
+  ctx.fillRect( -rw2, -rw2, rw, rw );
+  ctx.strokeRect( -rw2, -rw2, rw, rw )
 
-  2dCtx.beginPath();
-  2dCtx.moveTo( 0, rw2 / 2 );
-  2dCtx.lineTo( 0, rw2 );
-  2dCtx.closePath();
+  ctx.beginPath();
+  ctx.moveTo( 0, rw2 / 2);
+  ctx.lineTo( 0, rw2 / 2 + rw2 );
+  ctx.closePath();
 
-  2dCtx.stroke();
+  ctx.stroke();
 
-  2dCtx.restore();
+  ctx.restore();
 };
