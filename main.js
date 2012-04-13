@@ -29,6 +29,8 @@ init = function()
   h_canvas.addEventListener( "mouseup"  , onMouseUp  , false );
   h_canvas.addEventListener( "mousemove", onMouseMove, false );
 
+  robot = new Robot( new Point( 50, 70 ), 2 );
+
   setInterval( draw, REFRESH_RATE );
 };
 
@@ -105,7 +107,7 @@ draw = function()
 
   ctx.clearRect( 0, 0, f_W, f_H );
 
-  // do the drawing
+  robot.draw( ctx )
 
   ctx.restore();
 };
