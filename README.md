@@ -68,11 +68,11 @@ Representation
 --------------
 
 *To do* :
- - Robot.draw : _to test_
+ - Robot.draw : done
  - rest of the world (grid, axis, robot's info panel) : _to do_
 
 The robot is schematically drawn in a canvas.
 
 The user can plan its path by drawing it, and has a visual feedback of the
 motors power levels through two sliders. He can also directly control the robot
-using a joystick or the keyboard' arrows.
+using a joystick or the keyboard's arrows.
