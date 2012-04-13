@@ -22,6 +22,22 @@ function Robot( firstOrigin, firstOrientation )
   setInterval( Delegate( this, this.updatePosition ), Robot.dtUpdate );
 }
 
+Robot.prototype.setLeftPw = function( level )
+{
+  if( level <= 1 && level >= -1 )
+  {
+    this.leftPw = level;
+  }
+};
+
+Robot.prototype.setLeftPw = function( level )
+{
+  if( level <= 1 && level >= -1 )
+  {
+    this.rightPw = level;
+  }
+};
+
 /* Update the robot's position and orientation given the wheels speeds. */
 Robot.prototype.updatePosition = function()
 {
