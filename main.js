@@ -47,6 +47,11 @@ getUserInput = function()
   {
     l = 1;
     r = 1;
+
+    if( keyboard.isKeyDown( 37 ))
+      l = 0.5;
+    else if( keyboard.isKeyDown( 39 ) )
+      r = 0.5;
   }
   else if( keyboard.isKeyDown( 37 ) ) // left
   {
