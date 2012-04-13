@@ -23,7 +23,7 @@ function Robot( firstOrigin, firstOrientation )
 }
 
 /* Update the robot's position and orientation given the wheels speeds. */
-Robot.updatePosition = function()
+Robot.prototype.updatePosition = function()
 {
   var leftSpeed  = this.leftPw * Robot.wheelMaxSpeed;
   var rightSpeed = this.rightPw * Robot.wheelMaxSpeed;
@@ -45,7 +45,7 @@ Robot.updatePosition = function()
 };
 
 /* Draw a schematic robot in the given 2d context. */
-Robot.draw = function( 2dCtx )
+Robot.prototype.draw = function( ctx )
 {
   2dCtx.save();
 
