@@ -4,7 +4,7 @@
  */
 
 /* Constants relative to the robot */
-Robot.wheelMaxSpeed = 20;  // pixels/second
+Robot.wheelMaxSpeed = 40;  // pixels/second
 Robot.width         = 40;  // pixels
 Robot.dtUpdate      = 1 / 100 ; // s
 
