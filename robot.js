@@ -72,7 +72,7 @@ Robot.prototype.draw = function( ctx )
   ctx.strokeStye = "#FFFFFF"
 
   ctx.translate( this.origin.x, this.origin.y );
-  ctx.rotate( this.orientation );
+  ctx.rotate( this.orientation - ( Math.PI / 2 ) );
 
   var rw  = Robot.width
   var rw2 = Robot.width / 2;
