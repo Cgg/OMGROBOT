@@ -58,14 +58,14 @@ Graph.prototype.stopGraph = function()
  */
 Graph.prototype.addNode = function( point )
 {
-  nodes.push( point );
+  this.nodes.push( point );
 };
 
 Graph.prototype.rmNode = function( i )
 {
   if( i > 0 && i < nodes.length )
   {
-    nodes.splice( i );
+    this.nodes = this.nodes.splice( i );
   }
 };
 
@@ -81,7 +81,7 @@ Graph.prototype.node = function( i )
 {
   if( i > 0 && i < nodes.length )
   {
-    return nodes[ i ];
+    return this.nodes[ i ];
   }
   else
   {
