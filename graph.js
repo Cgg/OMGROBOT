@@ -65,9 +65,9 @@ Graph.prototype.stopGraph = function()
 
 /* Setters
  */
-Graph.prototype.addNode = function( point )
+Graph.prototype.insertNode = function( point, where )
 {
-  this.nodes.push( point );
+  this.nodes.splice( where, 1, point.clone() );
 };
 
 Graph.prototype.rmNode = function( i )
