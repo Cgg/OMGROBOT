@@ -14,3 +14,9 @@ function Delegate( obj, objMethod )
     return function() { return objMethod.call( obj ); }
   }
 }
+
+// Delegate function for event handlers bound to objects
+function eDelegate( obj, meth )
+{
+  return function( e ){return meth.call( obj, e );}
+}
