@@ -12,8 +12,9 @@ function Graph( canvas )
    // canvas : html canvas where the graph will be drawn
   this.canvas = canvas;
 
-  this.nodes = [];
-  this.drag  = false;
+  this.nodes   = [];
+  this.drag    = false;
+  this.running = false;
 }
 
 
@@ -23,22 +24,31 @@ function Graph( canvas )
  */
 Graph.prototype.startGraph = function( firstPoint )
 {
-  this.clearNodes();
+  if( !this.running )
+  {
+    this.clearNodes();
 
-  this.nodes.push( firstPoint );
+    this.nodes.push( firstPoint );
 
-  this.canvas.addEventListener( 'mousedown', eDelegate( this, this.onMouseDown ), false );
-  this.canvas.addEventListener( 'mouseup', eDelegate( this, this.onMouseUp ), false );
-  this.canvas.addEventListener( 'mousemove', eDelegate( this, this.onMouseMove ), false );
+    this.canvas.addEventListener( 'mousedown', eDelegate( this, this.onMouseDown ), false );
+    this.canvas.addEventListener( 'mouseup', eDelegate( this, this.onMouseUp ), false );
+    this.canvas.addEventListener( 'mousemove', eDelegate( this, this.onMouseMove ), false );
+
+    this.running = true;
+  }
 };
 
 Graph.prototype.stopGraph = function()
 {
-  this.canvas.removeEventListener( 'mousedown', eDelegate( this, this.onMouseDown ), false );
-  this.canvas.removeEventListener( 'mouseup', eDelegate( this, this.onMouseUp ), false );
-  this.canvas.removeEventListener( 'mousemove', eDelegate( this, this.onMouseMove ), false );
+  if( this.running )
+  {
+    this.canvas.removeEventListener( 'mousedown', eDelegate( this, this.onMouseDown ), false );
+    this.canvas.removeEventListener( 'mouseup', eDelegate( this, this.onMouseUp ), false );
+    this.canvas.removeEventListener( 'mousemove', eDelegate( this, this.onMouseMove ), false );
 
-  // send the event "Graph Finished !!"
+    this.running = false;
+    // send the event "Graph Finished !!"
+  }
 };
 
 // Graph.pause ?
