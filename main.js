@@ -32,7 +32,7 @@ init = function()
   keyboard = new Keyboard( window );
   graph    = new Graph( h_canvas );
 
-  robot = new Robot( new Point( 200, 300 ), 0 );
+  robot = new Robot( new Point( 300, 100 ), 0 );
 
   userInput = setInterval( getUserInput, 100 );
   setInterval( draw, REFRESH_RATE );
