@@ -5,9 +5,6 @@
  *  - right click = finish the graph
  */
 
-// If a mouse button is pressed less than that time it's considered to be a
-// click.
-Graph.ClickTime = 100; // ms.
 
 function Graph( canvas )
 {
