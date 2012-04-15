@@ -38,7 +38,10 @@ Robot.prototype.setRightPw = function( level )
   }
 };
 
-/* Update the robot's position and orientation given the wheels speeds. */
+
+/* Update the robot's position and orientation given the wheels speeds.
+ * If a target is set asservissment occurs
+ */
 Robot.prototype.updatePosition = function()
 {
   if( ( this.leftPw != this.rightPw ) && ( this.leftPw != -this.rightPw ) )

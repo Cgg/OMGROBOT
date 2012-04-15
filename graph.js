@@ -8,9 +8,8 @@
 
 function Graph( canvas )
 {
-  /* origin : center of the graph's first node
-   * canvas : html canvas where the graph will be drawn
-   */
+   // origin : center of the graph's first node
+   // canvas : html canvas where the graph will be drawn
   this.canvas = canvas;
 
   this.nodes = [];
@@ -18,9 +17,10 @@ function Graph( canvas )
 }
 
 
-// start and stop function (for drawing the graph).
-// starting to draw the graph resets it, but stopping it leaves it in its final
-// state.
+/* start and stop function (for drawing the graph).
+ * starting to draw the graph resets it, but stopping it leaves it in its final
+ * state.
+ */
 Graph.prototype.startGraph = function( firstPoint )
 {
   this.clearNodes();
@@ -44,7 +44,8 @@ Graph.prototype.stopGraph = function()
 // Graph.pause ?
 
 
-// setters
+/* Setters
+ */
 Graph.prototype.addNode = function( point )
 {
   nodes.push( point );
@@ -64,7 +65,8 @@ Graph.prototype.clearNodes = function()
 };
 
 
-// getters
+/* Getters
+ */
 Graph.prototype.node = function( i )
 {
   if( i > 0 && i < nodes.length )
@@ -83,7 +85,8 @@ Graph.prototype.nodes = function()
 };
 
 
-// mouse handlers
+/* Mouse events handlers
+ */
 Graph.prototype.onMouseDown = function( evt )
 {
   var cursorPostion = getCursorPos( evt );
@@ -109,7 +112,8 @@ Graph.prototype.onMouseMove = function( evt )
 };
 
 
-// draw
+/* Where the graph gets drawn.
+ */
 Graph.prototype.draw = function()
 {
   var ctx = this.canvas.getContext( '2d' );
