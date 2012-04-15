@@ -80,6 +80,18 @@ onMouseLeftDown = function( evt )
 {
   var cursorPostion = getCursorPos( evt );
 
+  // start the graph object and remove this listener. It will be re-added as
+  // soon as we receive the event "Graph finished" or "robot done"
+  // stop taking user inputs
+  h_canvas.removeEventListener( "mousedown", onMouseLeftDown, false );
+  graph.startGraph( robot.origin.clone() );
+  graph.addNode( cursorPostion );
+
+  // unplug user's input and stop the robot
+  clearInterval( userInput );
+  robot.setLeftPw( 0 );
+  robot.setRightPw( 0 );
+
   return true;
 };
 
