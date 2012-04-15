@@ -19,23 +19,35 @@ function Robot( firstOrigin, firstOrientation )
   this.leftPw  = 0;
   this.rightPw = 0;
 
+  // where to go
+  this.checkPoints = [];
+  this.currentTarget = undefined;
+
   setInterval( Delegate( this, this.updatePosition ), Robot.dtUpdate );
 }
 
-Robot.prototype.setLeftPw = function( level )
+
+/* High level API
+ */
+Robot.prototype.goTo = function( point )
 {
-  if( level <= 1 && level >= -1 )
-  {
-    this.leftPw = level;
-  }
+  this.currentTarget.x = point.x;
+  this.currentTarget.y = point.y;
 };
 
-Robot.prototype.setRightPw = function( level )
+Robot.prototype.goThrough = function( points )
 {
-  if( level <= 1 && level >= -1 )
+  // first reset current CP list.
+  this.checkPoints = [];
+
+  // then do a deep copy of given points list
+  for( i = 1 ; i < points.length ; i++ )
   {
-    this.rightPw = level;
+    this.checkPoints.push( { 'x': points[i].x, 'y': points[i].y } );
   }
+
+  // finally set current target to 1st point of the list.
+  this.goTo( points[ 0 ] );
 };
 
 
@@ -82,9 +94,48 @@ Robot.prototype.updatePosition = function()
       this.origin.y = this.origin.y + d * Math.sin( this.orientation );
     }
   }
+
+  if( this.currentTarget != undefined )
+  {
+    // do some magic
+  }
 };
 
-/* Draw a schematic robot in the given 2d context. */
+
+/* robot's event handlers
+ * for when the robot gets within a certain range from the target
+ */
+Robot.prototype.isNearTarget = function()
+{
+};
+
+// for when the robot is at the target (well very very close to it)
+Robot.prototype.isAtTarget = function()
+{
+};
+
+
+/* Getters for the robot's motors
+ */
+Robot.prototype.setLeftPw = function( level )
+{
+  if( level <= 1 && level >= -1 )
+  {
+    this.leftPw = level;
+  }
+};
+
+Robot.prototype.setRightPw = function( level )
+{
+  if( level <= 1 && level >= -1 )
+  {
+    this.rightPw = level;
+  }
+};
+
+
+/* Draw a schematic robot in the given 2d context.
+ */
 Robot.prototype.draw = function( ctx )
 {
   ctx.save();
