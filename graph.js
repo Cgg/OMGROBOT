@@ -6,6 +6,14 @@
  */
 
 
+/* Some constants
+ */
+
+// Node virtual radius.
+// this is the radius within which we are considering to be over a node.
+Graph.NODE_V_RADIUS = 5; // px
+
+
 function Graph( canvas )
 {
    // origin : center of the graph's first node
@@ -13,7 +21,7 @@ function Graph( canvas )
   this.canvas = canvas;
 
   this.nodes   = [];
-  this.drag    = false;
+  this.dragIdx = undefined;
   this.running = false;
 }
 
@@ -71,7 +79,8 @@ Graph.prototype.rmNode = function( i )
 
 Graph.prototype.clearNodes = function()
 {
-  this.nodes = [];
+  this.nodes   = [];
+  this.dragIdx = undefined;
 };
 
 
@@ -94,6 +103,21 @@ Graph.prototype.nodes = function()
   return this.nodes;
 };
 
+Graph.prototype.nodeUnderCursor = function( pos )
+{
+  for( var i = 0 ; i < this.nodes.length ; i++ )
+  {
+    if( Math.sqrt( Math.pow( pos.x - this.nodes[i].x, 2 ) +
+                   Math.pow( pos.y - this.nodes[i].y, 2 ) )
+        <= Graph.NODE_V_RADIUS )
+    {
+      return i;
+    }
+  }
+
+  return undefined;
+};
+
 
 /* Mouse events handlers
  */
@@ -101,8 +125,7 @@ Graph.prototype.onMouseDown = function( evt )
 {
   var cursorPostion = getCursorPos( evt );
 
-  // TODO check if an existing node exists under the cursor. If so we are dragging.
-  this.drag = false;
+  this.dragIdx = this.nodeUnderCursor( cursorPostion );
 
   return true;
 };
@@ -112,10 +135,14 @@ Graph.prototype.onMouseUp = function( evt )
   var cursorPostion = getCursorPos( evt );
 
   // add a node if and only we were not dragging an already existing node.
-  if( ! this.drag )
+  if( this.dragIdx == undefined )
+  {
     this.nodes.push( cursorPostion );
+  }
   else
-    this.drag = false;
+  {
+    this.dragIdx = undefined;
+  }
 
   return true;
 };
@@ -124,8 +151,11 @@ Graph.prototype.onMouseMove = function( evt )
 {
   var cursorPostion = getCursorPos( evt );
 
-  // TODO keep track of the index of the node being dragged. Set its coordinates
-  // to the cursor position.
+  if( this.dragIdx != undefined )
+  {
+    this.nodes[ this.dragIdx ].x = cursorPostion.x;
+    this.nodes[ this.dragIdx ].y = cursorPostion.y;
+  }
 
   return true;
 };
