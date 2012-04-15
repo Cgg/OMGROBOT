@@ -125,7 +125,10 @@ Graph.prototype.onMouseDown = function( evt )
 {
   var cursorPostion = getCursorPos( evt );
 
-  this.dragIdx = this.nodeUnderCursor( cursorPostion );
+  if( evt.which == MouseButtons.LEFT )
+  {
+    this.dragIdx = this.nodeUnderCursor( cursorPostion );
+  }
 
   return true;
 };
@@ -135,13 +138,21 @@ Graph.prototype.onMouseUp = function( evt )
   var cursorPostion = getCursorPos( evt );
 
   // add a node if and only we were not dragging an already existing node.
-  if( this.dragIdx == undefined )
+  // plus add with left button only
+  if( evt.which == MouseButtons.LEFT )
   {
-    this.nodes.push( cursorPostion );
+    if( this.dragIdx == undefined )
+    {
+      this.nodes.push( cursorPostion );
+    }
+    else
+    {
+      this.dragIdx = undefined;
+    }
   }
-  else
+  else if( evt.which == MouseButtons.RIGHT )
   {
-    this.dragIdx = undefined;
+    this.stopGraph();
   }
 
   return true;
