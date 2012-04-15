@@ -100,25 +100,34 @@ Graph.prototype.nodes = function()
 Graph.prototype.onMouseDown = function( evt )
 {
   var cursorPostion = getCursorPos( evt );
-  console.log( "down", this );
 
-  this.drag = true;
+  // TODO check if an existing node exists under the cursor. If so we are dragging.
+  this.drag = false;
+
+  return true;
 };
 
 Graph.prototype.onMouseUp = function( evt )
 {
   var cursorPostion = getCursorPos( evt );
-  console.log( "up", this );
 
-  this.drag = false;
+  // add a node if and only we were not dragging an already existing node.
+  if( ! this.drag )
+    this.nodes.push( cursorPostion );
+  else
+    this.drag = false;
+
+  return true;
 };
 
 Graph.prototype.onMouseMove = function( evt )
 {
   var cursorPostion = getCursorPos( evt );
 
-  if( this.drag )
-    console.log( "drag", this );
+  // TODO keep track of the index of the node being dragged. Set its coordinates
+  // to the cursor position.
+
+  return true;
 };
 
 
