@@ -92,7 +92,7 @@ onMouseUp = function( evt )
     // start the graph object and remove this listener. It will be re-added as
     // soon as we receive the event "Graph finished" or "robot done"
     // stop taking user inputs
-    h_canvas.removeEventListener( "mousedown", onMouseUp, false );
+    h_canvas.removeEventListener( "mouseup", onMouseUp, false );
     graph.startGraph( robot.origin.clone() );
     graph.addNode( cursorPostion );
 
