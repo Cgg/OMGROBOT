@@ -6,14 +6,6 @@
  */
 
 
-/* Some constants
- */
-
-// Node virtual radius.
-// this is the radius within which we are considering to be over a node.
-Graph.NODE_V_RADIUS = 5; // px
-
-
 function Graph( canvas )
 {
    // origin : center of the graph's first node
@@ -24,6 +16,18 @@ function Graph( canvas )
   this.dragIdx = undefined;
   this.running = false;
 }
+
+
+Graph.prototype = new EventTarget();
+Graph.constructor = Graph;
+
+
+/* Some constants
+ */
+
+// Node virtual radius.
+// this is the radius within which we are considering to be over a node.
+Graph.NODE_V_RADIUS = 5; // px
 
 
 /* start and stop function (for drawing the graph).
