@@ -12,6 +12,15 @@
  * - if a variable is a constant its name is in uppercase (not the prefix)
  */
 
+
+MouseButtons =
+{
+  "LEFT"   : 1,
+  "MIDDLE" : 2,
+  "RIGHT"  : 3
+};
+
+
 init = function()
 {
   /* Wonderful html world */
