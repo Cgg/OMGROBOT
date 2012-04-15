@@ -147,7 +147,8 @@ draw = function()
 
   ctx.clearRect( 0, 0, f_W, f_H );
 
-  robot.draw( ctx )
+  graph.draw();
+  robot.draw( ctx );
 
   ctx.restore();
 };

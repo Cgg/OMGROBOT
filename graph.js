@@ -120,9 +120,16 @@ Graph.prototype.draw = function()
 
   ctx.save();
 
-  for( i = 0 ; i < nodes.length ; i++ )
+  ctx.beginPath();
+
+  for( i = 0 ; i < this.nodes.length - 1 ; i++ )
   {
+    ctx.moveTo( this.nodes[i].x, this.nodes[i].y );
+    ctx.lineTo( this.nodes[i+1].x, this.nodes[i+1].y );
   }
+
+  ctx.closePath();
+  ctx.stroke();
 
   ctx.restore();
 }
