@@ -34,15 +34,44 @@ init = function()
   f_H      = h_canvas.height;
 
   h_canvas.addEventListener( "contextmenu", onCtxMenu, false );
-  h_canvas.addEventListener( "mouseup"  , onMouseUp  , false );
 
   keyboard = new Keyboard( window );
   graph    = new Graph( h_canvas );
+
+  graph.addListener( "graphstarted", onStartGraph );
+  graph.addListener( "graphstopped", onStopGraph );
 
   robot = new Robot( new Point( 300, 100 ), 0 );
 
   userInput = setInterval( getUserInput, 100 );
   setInterval( draw, REFRESH_RATE );
+};
+
+
+/* Handlers for graph events
+ */
+// the user started to draw the graph
+onStartGraph = function()
+{
+  graph.insertNode( robot.origin, 0 );
+  clearInterval( userInput );
+  robot.setLeftPw( 0 );
+  robot.setRightPw( 0 );
+};
+
+// the user stopped to draw the graph
+onStopGraph = function()
+{
+  // TODO send the node list to the robot
+};
+
+
+/* Handlers for robot's events
+ */
+onEndOfTrajectory = function()
+{
+  // give back the control to the user
+  userInput = setInterval( getUserInput, 100 );
 };
 
 
@@ -83,28 +112,6 @@ getUserInput = function()
 
 
 /* mouse events handlers */
-onMouseUp = function( evt )
-{
-  if( evt.which == MouseButtons.LEFT )
-  {
-    var cursorPostion = getCursorPos( evt );
-
-    // start the graph object and remove this listener. It will be re-added as
-    // soon as we receive the event "Graph finished" or "robot done"
-    // stop taking user inputs
-    h_canvas.removeEventListener( "mouseup", onMouseUp, false );
-    graph.startGraph( robot.origin.clone() );
-    graph.addNode( cursorPostion );
-
-    // unplug user's input and stop the robot
-    clearInterval( userInput );
-    robot.setLeftPw( 0 );
-    robot.setRightPw( 0 );
-  }
-
-  return true;
-};
-
 onCtxMenu = function( evt )
 {
   // this simply prevents the context menu to appear when the user right-clicks

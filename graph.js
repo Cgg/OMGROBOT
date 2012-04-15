@@ -12,6 +12,11 @@ function Graph( canvas )
    // canvas : html canvas where the graph will be drawn
   this.canvas = canvas;
 
+  this.canvas.addEventListener( 'mousedown', eDelegate( this, this.onMouseDown ), false );
+  this.canvas.addEventListener( 'mouseup', eDelegate( this, this.onMouseUp ), false );
+  this.canvas.addEventListener( 'mousemove', eDelegate( this, this.onMouseMove ), false );
+
+
   this.nodes   = [];
   this.dragIdx = undefined;
   this.running = false;
@@ -34,19 +39,15 @@ Graph.NODE_V_RADIUS = 5; // px
  * starting to draw the graph resets it, but stopping it leaves it in its final
  * state.
  */
-Graph.prototype.startGraph = function( firstPoint )
+Graph.prototype.startGraph = function()
 {
   if( !this.running )
   {
     this.clearNodes();
 
-    this.nodes.push( firstPoint );
-
-    this.canvas.addEventListener( 'mousedown', eDelegate( this, this.onMouseDown ), false );
-    this.canvas.addEventListener( 'mouseup', eDelegate( this, this.onMouseUp ), false );
-    this.canvas.addEventListener( 'mousemove', eDelegate( this, this.onMouseMove ), false );
-
     this.running = true;
+
+    this.fire( "graphstarted" );
   }
 };
 
@@ -54,12 +55,8 @@ Graph.prototype.stopGraph = function()
 {
   if( this.running )
   {
-    this.canvas.removeEventListener( 'mousedown', eDelegate( this, this.onMouseDown ), false );
-    this.canvas.removeEventListener( 'mouseup', eDelegate( this, this.onMouseUp ), false );
-    this.canvas.removeEventListener( 'mousemove', eDelegate( this, this.onMouseMove ), false );
-
     this.running = false;
-    // send the event "Graph Finished !!"
+    this.fire( "graphstopped" );
   }
 };
 
@@ -145,6 +142,11 @@ Graph.prototype.onMouseUp = function( evt )
   // plus add with left button only
   if( evt.which == MouseButtons.LEFT )
   {
+    if( !this.running )
+    {
+      this.startGraph();
+    }
+
     if( this.dragIdx == undefined )
     {
       this.nodes.push( cursorPostion );
