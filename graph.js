@@ -126,7 +126,7 @@ Graph.prototype.onMouseDown = function( evt )
 {
   var cursorPostion = getCursorPos( evt );
 
-  if( evt.which == MouseButtons.LEFT )
+  if( this.running && evt.which == MouseButtons.LEFT )
   {
     this.dragIdx = this.nodeUnderCursor( cursorPostion );
   }
