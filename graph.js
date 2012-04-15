@@ -171,7 +171,7 @@ Graph.prototype.draw = function()
 
   ctx.beginPath();
 
-  for( i = 0 ; i < this.nodes.length - 1 ; i++ )
+  for( var i = 0 ; i < this.nodes.length - 1 ; i++ )
   {
     ctx.moveTo( this.nodes[i].x, this.nodes[i].y );
     ctx.lineTo( this.nodes[i+1].x, this.nodes[i+1].y );
