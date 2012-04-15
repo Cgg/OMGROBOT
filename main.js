@@ -33,10 +33,8 @@ init = function()
   f_W      = h_canvas.width;
   f_H      = h_canvas.height;
 
-  h_canvas.addEventListener( "mousedown", onMouseLeftDown, false );
-  h_canvas.addEventListener( "contextmenu", onMouseRightDown, false );
+  h_canvas.addEventListener( "contextmenu", onCtxMenu, false );
   h_canvas.addEventListener( "mouseup"  , onMouseUp  , false );
-  h_canvas.addEventListener( "mousemove", onMouseMove, false );
 
   keyboard = new Keyboard( window );
   graph    = new Graph( h_canvas );
@@ -85,46 +83,33 @@ getUserInput = function()
 
 
 /* mouse events handlers */
-onMouseLeftDown = function( evt )
+onMouseUp = function( evt )
 {
-  var cursorPostion = getCursorPos( evt );
+  if( evt.which == MouseButtons.LEFT )
+  {
+    var cursorPostion = getCursorPos( evt );
 
-  // start the graph object and remove this listener. It will be re-added as
-  // soon as we receive the event "Graph finished" or "robot done"
-  // stop taking user inputs
-  h_canvas.removeEventListener( "mousedown", onMouseLeftDown, false );
-  graph.startGraph( robot.origin.clone() );
-  graph.addNode( cursorPostion );
+    // start the graph object and remove this listener. It will be re-added as
+    // soon as we receive the event "Graph finished" or "robot done"
+    // stop taking user inputs
+    h_canvas.removeEventListener( "mousedown", onMouseUp, false );
+    graph.startGraph( robot.origin.clone() );
+    graph.addNode( cursorPostion );
 
-  // unplug user's input and stop the robot
-  clearInterval( userInput );
-  robot.setLeftPw( 0 );
-  robot.setRightPw( 0 );
+    // unplug user's input and stop the robot
+    clearInterval( userInput );
+    robot.setLeftPw( 0 );
+    robot.setRightPw( 0 );
+  }
 
   return true;
 };
 
-onMouseRightDown = function( evt )
+onCtxMenu = function( evt )
 {
   // this simply prevents the context menu to appear when the user right-clicks
   // on the canvas.
   evt.preventDefault();
-
-  var cursorPostion = getCursorPos( evt );
-
-  return true;
-};
-
-onMouseUp = function( evt )
-{
-  var cursorPostion = getCursorPos( evt );
-
-  return true;
-};
-
-onMouseMove = function( evt )
-{
-  var cursorPostion = getCursorPos( evt );
 
   return true;
 };
