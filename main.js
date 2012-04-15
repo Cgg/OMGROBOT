@@ -34,7 +34,7 @@ init = function()
 
   robot = new Robot( new Point( 200, 300 ), 0 );
 
-  setInterval( getUserInput, 100 );
+  userInput = setInterval( getUserInput, 100 );
   setInterval( draw, REFRESH_RATE );
 };
 
