@@ -43,7 +43,7 @@ Robot.prototype.goThrough = function( points )
   // then do a deep copy of given points list
   for( i = 1 ; i < points.length ; i++ )
   {
-    this.checkPoints.push( { 'x': points[i].x, 'y': points[i].y } );
+    this.checkPoints.push( points[i].clone() );
   }
 
   // finally set current target to 1st point of the list.
