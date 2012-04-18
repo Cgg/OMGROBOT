@@ -21,7 +21,6 @@ function Robot( firstOrigin, firstOrientation )
 
   // where to go
   this.checkPoints = [];
-  this.currentTarget = undefined;
 
   setInterval( Delegate( this, this.updatePosition ), Robot.dtUpdate );
 
@@ -35,8 +34,7 @@ function Robot( firstOrigin, firstOrientation )
  */
 Robot.prototype.goTo = function( point )
 {
-  this.currentTarget.x = point.x;
-  this.currentTarget.y = point.y;
+  this.checkPoints.unshift( point.clone() )
 };
 
 Robot.prototype.goThrough = function( points )
