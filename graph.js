@@ -99,7 +99,7 @@ Graph.prototype.node = function( i )
   }
 };
 
-Graph.prototype.nodes = function()
+Graph.prototype.graphNodes = function()
 {
   return this.nodes;
 };
