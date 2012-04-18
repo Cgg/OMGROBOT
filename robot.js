@@ -47,9 +47,6 @@ Robot.prototype.goThrough = function( points )
   {
     this.checkPoints.push( points[i].clone() );
   }
-
-  // finally set current target to 1st point of the list.
-  this.goTo( points[ 0 ] );
 };
 
 
@@ -100,6 +97,32 @@ Robot.prototype.updatePosition = function()
   if( this.currentTarget != undefined )
   {
     // do some magic
+    // - compute distance to target
+    // - compute delta orientation
+
+    var tg = this.checkPoints[ 0 ];
+
+    var alpha_tg = - Math.atan2( this.origin.y - tg.y, tg.x - this.origin.x );
+
+    var dalpha = alpha_tg - this.orientation;
+
+    var dd = Math.sqrt( Math.pow( this.origin.x - tg.x, 2 ) +
+                        Math.pow( this.origin.y - tg.y, 2 ) );
+
+    var p_lin = Math.atan( dd / 50 ) / ( Math.PI / 2 );
+    var p_l   = p_lin * ( dalpha < 0 ? ((-2*dalpha)/Math.PI) + 1 : 1 );
+    var p_r   = p_lin * ( dalpha > 0 ? ((-2*dalpha)/Math.PI) + 1 : 1 );
+    this.setLeftPw( p_l );
+    this.setRightPw( p_r );
+
+    if( dd < 5 )
+    {
+      this.isAtTarget();
+    }
+    else if( dd < 30 )
+    {
+      this.isNearTarget();
+    }
   }
 };
 
@@ -109,11 +132,16 @@ Robot.prototype.updatePosition = function()
  */
 Robot.prototype.isNearTarget = function()
 {
+  this.checkPoints.splice( 0, 1 );
 };
 
 // for when the robot is at the target (well very very close to it)
 Robot.prototype.isAtTarget = function()
 {
+  this.checkPoints.splice( 0, 1 );
+
+  this.setLeftPw( 0 );
+  this.setRightPw( 0 );
 };
 
 
