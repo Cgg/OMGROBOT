@@ -94,7 +94,16 @@ Robot.prototype.updatePosition = function()
     }
   }
 
-  if( this.currentTarget != undefined )
+  if( this.orientation < 0 )
+  {
+    this.orientation = ( 2 * Math.PI ) - this.orientation;
+  }
+  else if( this.orientation > 2 * Math.PI )
+  {
+    this.orientation = this.orientation - ( 2 * Math.PI );
+  }
+
+  if( this.checkPoints.length > 0 )
   {
     // do some magic
     // - compute distance to target
