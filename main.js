@@ -63,6 +63,7 @@ onStartGraph = function()
 onStopGraph = function()
 {
   // TODO send the node list to the robot
+  robot.goThrough( graph.graphNodes() );
 };
 
 
