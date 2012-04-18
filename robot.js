@@ -24,6 +24,10 @@ function Robot( firstOrigin, firstOrientation )
   this.currentTarget = undefined;
 
   setInterval( Delegate( this, this.updatePosition ), Robot.dtUpdate );
+
+  this.divX = document.getElementById( "robotX" );
+  this.divY = document.getElementById( "robotY" );
+  this.divA = document.getElementById( "robotA" );
 }
 
 
