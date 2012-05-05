@@ -104,11 +104,11 @@ Robot.prototype.updatePosition = function()
     }
   }
 
-  if( this.orientation < 0 )
+  if( this.orientation < - Math.PI )
   {
-    this.orientation = ( 2 * Math.PI ) - this.orientation;
+    this.orientation = this.orientation + 2 * Math.PI;
   }
-  else if( this.orientation > 2 * Math.PI )
+  else if( this.orientation > Math.PI )
   {
     this.orientation = this.orientation - ( 2 * Math.PI );
   }
