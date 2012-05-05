@@ -1,0 +1,67 @@
+objet "Graphic Path"
+
+chain of nodes. Each node is linked to the next one, no bidirectional link
+
+send an event : GraphFinished along with the list of nodes/ nodes coordinates
+as soon as the user finishes the graph, or decides it's finished.
+
+--
+
+l'objet Graph peut etre lancé et arrêté -> le dessin est lancé et arrêté
+
+Dès que l'utilisateur clique qqpart le graph est lancé et le robot reçoit la
+liste des noeuds à traverser.
+
+Tant que l'utilisateur rajoute des noeuds avec le clic gauche le robot les
+reçoit dans sa liste de noeuds à parcourir.
+
+Si l'utilisateur fait un clic droit, il arrête de dessiner le graph mais le
+robot a encore accès à la liste des noeuds et continue son parcours.
+L'utilisateur n'a pas encore la main sur le robot.
+
+Quand le robot arrive au bout de son parcours le graphe est arrêté (si il ne
+l'est pas déjà) et l'utilisateur récupère la main sur le robot.
+
+Si l'utilisateur peut recommencer un graphe si il a arrêté le graphe en cours et
+que le robot est encore en train de le parcourir. Les noeuds restant sont
+supprimés et le robot suivra la nouvelle trajectoire.
+
+Algo robot
+
+Tant que( liste noeud non vide )
+
+  Goto( liste noeud[ 0 ] )
+
+  delete liste noeud[ 0 ]
+
+Fin TQ
+
+Robot.currentTarget = { x: smt, y: smtelse }
+Quand le robot arrive près un event "Near" est envoyé
+Quand le robot est arrivé un event "Arrived" est envoyé.
+
+Le robot fait une copie de la liste de points.
+
+Si le graph est remis à zéro et recommencé, cette liste est recopiée
+
+Event Delegation :
+------------------
+
+Pour chaque MouseEvent, un seul handler est connecté au canvas et dispatche les
+events vers l'objet (les objets) concerné(s).
+onMouseDown
+
+if graph.isRunning
+  graph.onMouseDown
+else
+  myOnMouseDown
+
+
+onMouseUp
+
+if graph.isRunning
+  graph.onMouseUp
+else
+  myOnMouseUp (ie nothing)
+
+etc.
