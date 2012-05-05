@@ -7,10 +7,15 @@
 Robot.wheelMaxSpeed = 40;  // pixels/second
 Robot.width         = 40;  // pixels
 Robot.dtUpdate      = 1 / 100 ; // s
+Robot.color         = "#FF0000"
+Robot.nearColor     = "#FF9100"
+Robot.atColor       = "#00FF00"
 
 /* build a robot, given its point of origin and its first orientation */
 function Robot( firstOrigin, firstOrientation )
 {
+  this.color = Robot.color;
+
   // position
   this.origin      = firstOrigin;
   this.orientation = firstOrientation;
@@ -156,7 +161,12 @@ Robot.prototype.updatePosition = function()
  */
 Robot.prototype.isNearTarget = function()
 {
-  this.checkPoints.splice( 0, 1 );
+  if( this.checkPoints.length > 1 )
+  {
+    this.checkPoints.splice( 0, 1 );
+  }
+
+  this.color = Robot.nearColor;
 };
 
 // for when the robot is at the target (well very very close to it)
@@ -166,6 +176,8 @@ Robot.prototype.isAtTarget = function()
 
   this.setLeftPw( 0 );
   this.setRightPw( 0 );
+
+  this.color = Robot.atColor;
 };
 
 
@@ -194,8 +206,8 @@ Robot.prototype.draw = function( ctx )
 {
   ctx.save();
 
-  ctx.fillStyle = "#FF9100"
-  ctx.strokeStye = "#FFFFFF"
+  ctx.fillStyle = this.color;
+  ctx.strokeStye = "#FFFFFF";
 
   ctx.translate( this.origin.x, this.origin.y );
   ctx.rotate( this.orientation - ( Math.PI / 2 ) );
