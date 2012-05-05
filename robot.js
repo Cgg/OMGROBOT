@@ -188,18 +188,20 @@ Robot.prototype.isAtTarget = function()
  */
 Robot.prototype.setLeftPw = function( level )
 {
-  if( level <= 1 && level >= -1 )
-  {
-    this.leftPw = level;
-  }
+  // make sure level is between -1 and 1.
+  level = level > 1  ? 1  :
+          level < -1 ? -1 : level;
+
+  this.leftPw = level;
 };
 
 Robot.prototype.setRightPw = function( level )
 {
-  if( level <= 1 && level >= -1 )
-  {
-    this.rightPw = level;
-  }
+  // make sure level is between -1 and 1.
+  level = level > 1  ? 1  :
+          level < -1 ? -1 : level;
+
+  this.rightPw = level;
 };
 
 
