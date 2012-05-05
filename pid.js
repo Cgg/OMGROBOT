@@ -27,7 +27,7 @@ function PID( P, I, D, initReference, initFeedback )
   this.reference = initReference;
 }
 
-PID.prototype.updateFeedBack = function( newFeedback )
+PID.prototype.updateFeedback = function( newFeedback )
 {
   var error = this.reference - newFeedback;
 
@@ -50,7 +50,7 @@ PID.prototype.setReference = function( newRef )
   this.ITermN = 0;
 };
 
-PID.prototype.setRefAndFeedBack = function( newRef, newFeedback )
+PID.prototype.setRefAndFeedback = function( newRef, newFeedback )
 {
   this.setReference( newRef );
 
