@@ -54,5 +54,5 @@ PID.prototype.setRefAndFeedback = function( newRef, newFeedback )
 {
   this.setReference( newRef );
 
-  return this.updateFeedBack( newFeedback );
+  return this.updateFeedback( newFeedback );
 };
