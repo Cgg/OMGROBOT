@@ -41,7 +41,7 @@ init = function()
   graph.addListener( "graphstarted", onStartGraph );
   graph.addListener( "graphstopped", onStopGraph );
 
-  robot = new Robot( new Point( 300, 100 ), 0 );
+  robot = new Robot( new Point( 100, 300 ), 0 );
 
   userInput = setInterval( getUserInput, 100 );
   setInterval( draw, REFRESH_RATE );
