@@ -14,14 +14,45 @@
  * for more information about the controller.
  */
 
-function PID( P, I, D, initReference )
+function PID( P, I, D, initReference, initFeedback )
 {
+  this.P = P;
+  this.I = I;
+  this.D = D;
+
+  this.ITermN = 0;
+
+  this.feedbackN = initFeedback;
+
+  this.reference = initReference;
 }
 
-PID.prototype.updateFeedBack = function( newFeedBack )
+PID.prototype.updateFeedBack = function( newFeedback )
 {
+  var error = this.reference - newFeedback;
+
+  // compute the three terms of the command
+  var PTermN  = error * this.P;
+  this.ITermN = this.ITermN + ( error * this.I );
+  var DTermN  = - this.D * ( newFeedback - this.feedbackN );
+
+  this.feedbackN = newFeedback;
+
+  // return the command, sum of the three terms
+  return PTerm + this.ITermN + DTerm;
 };
 
 PID.prototype.setReference = function( newRef )
 {
+  this.reference = newRef;
+
+  // since the reference changed, must reeet the I term.
+  this.ITermN = 0;
+};
+
+PID.prototype.setRefAndFeedBack = function( newRef, newFeedback )
+{
+  this.setReference( newRef );
+
+  return this.updateFeedBack( newFeedback );
 };
