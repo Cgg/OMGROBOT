@@ -61,10 +61,11 @@ Robot.prototype.goThrough = function( points )
 
 
 /* Update the robot's position and orientation given the wheels speeds.
- * If a target is set asservissment occurs
+ * If a target is set, asservissment occurs
  */
 Robot.prototype.updatePosition = function()
 {
+  // first uppdate robot's position and orientation
   if( ( this.leftPw != this.rightPw ) && ( this.leftPw != -this.rightPw ) )
   {
     var leftSpeed  = this.leftPw * Robot.wheelMaxSpeed;
@@ -104,6 +105,7 @@ Robot.prototype.updatePosition = function()
     }
   }
 
+  // make sure the orientation stays within a reasonnable range
   if( this.orientation < - Math.PI )
   {
     this.orientation = this.orientation + 2 * Math.PI;
@@ -113,12 +115,9 @@ Robot.prototype.updatePosition = function()
     this.orientation = this.orientation - ( 2 * Math.PI );
   }
 
+  // now, if we have a list of points to go through, go to the first of it.
   if( this.checkPoints.length > 0 )
   {
-    // do some magic
-    // - compute distance to target
-    // - compute delta orientation
-
     var tg = this.checkPoints[ 0 ];
 
     var alpha_tg = - Math.atan2( this.origin.y - tg.y, tg.x - this.origin.x );
@@ -135,6 +134,7 @@ Robot.prototype.updatePosition = function()
     this.setLeftPw( p_l );
     this.setRightPw( p_r );
 
+    // if we are getting close to the target, trigger the corresponding events.
     if( dd < 5 )
     {
       this.isAtTarget();
@@ -144,6 +144,8 @@ Robot.prototype.updatePosition = function()
       this.isNearTarget();
     }
 
+    // show the current target's coordinate on the html page, as well as our
+    // situation with regard to it.
     this.divTX.innerText = tg.x;
     this.divTY.innerText = tg.y;
     this.divTA.innerText = Math.floor( dalpha * 180 / Math.PI );
