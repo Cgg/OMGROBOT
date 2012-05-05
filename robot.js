@@ -143,6 +143,10 @@ Robot.prototype.updatePosition = function()
     {
       this.isNearTarget();
     }
+    else
+    {
+      this.color = Robot.color;
+    }
 
     // show the current target's coordinate on the html page, as well as our
     // situation with regard to it.
