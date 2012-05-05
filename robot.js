@@ -24,9 +24,14 @@ function Robot( firstOrigin, firstOrientation )
 
   setInterval( Delegate( this, this.updatePosition ), Robot.dtUpdate );
 
-  this.divX = document.getElementById( "robotX" );
-  this.divY = document.getElementById( "robotY" );
-  this.divA = document.getElementById( "robotA" );
+  this.divRX = document.getElementById( "robotX" );
+  this.divRY = document.getElementById( "robotY" );
+  this.divRA = document.getElementById( "robotA" );
+
+  this.divTX = document.getElementById( "targetX" );
+  this.divTY = document.getElementById( "targetY" );
+  this.divTA = document.getElementById( "targetA" );
+  this.divTD = document.getElementById( "targetD" );
 }
 
 
@@ -132,7 +137,17 @@ Robot.prototype.updatePosition = function()
     {
       this.isNearTarget();
     }
+
+    this.divTX.innerText = tg.x;
+    this.divTY.innerText = tg.y;
+    this.divTA.innerText = Math.floor( dalpha * 180 / Math.PI );
+    this.divTD.innerText = Math.floor( dd );
   }
+
+  // show the robot's coordinates on the html page
+  this.divRX.innerText = this.origin.x;
+  this.divRY.innerText = this.origin.y;
+  this.divRA.innerText = this.orientation * 180 / Math.PI;
 };
 
 
