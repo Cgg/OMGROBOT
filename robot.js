@@ -128,9 +128,10 @@ Robot.prototype.updatePosition = function()
     var dd = Math.sqrt( Math.pow( this.origin.x - tg.x, 2 ) +
                         Math.pow( this.origin.y - tg.y, 2 ) );
 
-    var p_lin = Math.atan( dd / 50 ) / ( Math.PI / 2 );
-    var p_l   = p_lin * ( dalpha < 0 ? ((-2*dalpha)/Math.PI) + 1 : 1 );
-    var p_r   = p_lin * ( dalpha > 0 ? ((-2*dalpha)/Math.PI) + 1 : 1 );
+    var p_lin = Math.atan( dd / 20 ) / ( Math.PI / 2 );
+    var angularCoeff = ((dalpha > 0 ? -1:1)*2*dalpha)/Math.PI + 1;
+    var p_l   = p_lin * ( dalpha < 0 ? angularCoeff : 1 );
+    var p_r   = p_lin * ( dalpha > 0 ? angularCoeff : 1 );
     this.setLeftPw( p_l );
     this.setRightPw( p_r );
 
@@ -138,7 +139,7 @@ Robot.prototype.updatePosition = function()
     {
       this.isAtTarget();
     }
-    else if( dd < 30 )
+    else if( dd < 60 )
     {
       this.isNearTarget();
     }
