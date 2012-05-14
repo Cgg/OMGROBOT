@@ -39,7 +39,7 @@ PID.prototype.updateFeedback = function( newFeedback )
   this.feedbackN = newFeedback;
 
   // return the command, sum of the three terms
-  return PTerm + this.ITermN + DTerm;
+  return PTermN + this.ITermN + DTermN;
 };
 
 PID.prototype.setReference = function( newRef )
