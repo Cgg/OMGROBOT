@@ -144,8 +144,17 @@ Robot.prototype.updatePosition = function()
     distanceCommand = distanceCommand > 1  ? 1  :
                       distanceCommand < -1 ? -1 : distanceCommand;
 
-    this.setLeftPw( distanceCommand + angleCommand );
-    this.setRightPw( distanceCommand - angleCommand );
+    var leftCommand  = distanceCommand - angleCommand;
+    var rightCommand = distanceCommand + angleCommand;
+
+    leftCommand = leftCommand > 1  ? 1  :
+                  leftCommand < -1 ? -1 : leftCommand;
+
+    rightCommand = rightCommand > 1  ? 1  :
+                   rightCommand < -1 ? -1 : rightCommand;
+
+    this.setLeftPw( leftCommand );
+    this.setRightPw( rightCommand );
 
     if( dd < 5 )
     {
