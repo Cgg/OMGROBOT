@@ -27,6 +27,12 @@ function Robot( firstOrigin, firstOrientation )
   // where to go
   this.checkPoints = [];
 
+  // how to go there
+  // since we calculate deltas with regards to the current target, the
+  // controller's targets are set to 0 (where we want the deltas to go).
+  this.distanceControl = new PID( 1, 0, 0, 0, 0 );
+  this.angleControl    = new PID( 1, 0, 0, 0, 0 );
+
   setInterval( Delegate( this, this.updatePosition ), Robot.dtUpdate );
 
   this.divRX = document.getElementById( "robotX" );
@@ -131,12 +137,15 @@ Robot.prototype.updatePosition = function()
     var dd = Math.sqrt( Math.pow( this.origin.x - tg.x, 2 ) +
                         Math.pow( this.origin.y - tg.y, 2 ) );
 
-    var p_lin = Math.atan( dd / 20 ) / ( Math.PI / 2 );
-    var angularCoeff = ((dalpha > 0 ? -1:1)*2*dalpha)/Math.PI + 1;
-    var p_l   = p_lin * ( dalpha < 0 ? angularCoeff : 1 );
-    var p_r   = p_lin * ( dalpha > 0 ? angularCoeff : 1 );
-    this.setLeftPw( p_l );
-    this.setRightPw( p_r );
+    // update the controllers and use their outputs.
+    var distanceCommand = this.distanceControl.updateFeedback( - dd / 50 );
+    var angleCommand    = this.angleControl.updateFeedback( dalpha / Math.PI );
+
+    distanceCommand = distanceCommand > 1  ? 1  :
+                      distanceCommand < -1 ? -1 : distanceCommand;
+
+    this.setLeftPw( distanceCommand + angleCommand );
+    this.setRightPw( distanceCommand - angleCommand );
 
     if( dd < 5 )
     {
