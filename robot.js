@@ -33,6 +33,9 @@ function Robot( firstOrigin, firstOrientation )
   this.divRY = document.getElementById( "robotY" );
   this.divRA = document.getElementById( "robotA" );
 
+  this.divRL = document.getElementById( "robotLMotor" );
+  this.divRR = document.getElementById( "robotRMotor" );
+
   this.divTX = document.getElementById( "targetX" );
   this.divTY = document.getElementById( "targetY" );
   this.divTA = document.getElementById( "targetA" );
@@ -154,6 +157,10 @@ Robot.prototype.updatePosition = function()
   this.divRX.innerText = this.origin.x;
   this.divRY.innerText = this.origin.y;
   this.divRA.innerText = this.orientation * 180 / Math.PI;
+
+  // show the robot's motor input levels on the html page
+  this.divRL.innerText = this.leftPw;
+  this.divRR.innerText = this.rightPw;
 };
 
 
