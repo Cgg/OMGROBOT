@@ -30,8 +30,8 @@ function Robot( firstOrigin, firstOrientation )
   // how to go there
   // since we calculate deltas with regards to the current target, the
   // controller's targets are set to 0 (where we want the deltas to go).
-  this.distanceControl = new PID( 1, 0, 0, 0, 0 );
-  this.angleControl    = new PID( 1, 0, 0, 0, 0 );
+  this.distanceControl = new PID( 0.5, 0, 7, 0, 0 );
+  this.angleControl    = new PID( 5, 0, 7, 0, 0 );
 
   setInterval( Delegate( this, this.updatePosition ), Robot.dtUpdate );
 
@@ -138,7 +138,7 @@ Robot.prototype.updatePosition = function()
                         Math.pow( this.origin.y - tg.y, 2 ) );
 
     // update the controllers and use their outputs.
-    var distanceCommand = this.distanceControl.updateFeedback( - dd / 50 );
+    var distanceCommand = this.distanceControl.updateFeedback( - dd / 10 );
     var angleCommand    = this.angleControl.updateFeedback( dalpha / Math.PI );
 
     distanceCommand = distanceCommand > 1  ? 1  :
@@ -156,11 +156,11 @@ Robot.prototype.updatePosition = function()
     this.setLeftPw( leftCommand );
     this.setRightPw( rightCommand );
 
-    if( dd < 5 )
+    if( dd < 2 )
     {
       this.isAtTarget();
     }
-    else if( dd < 60 )
+    else if( dd < 20 )
     {
       this.isNearTarget();
     }
