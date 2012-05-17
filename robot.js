@@ -113,13 +113,13 @@ Robot.prototype.updatePosition = function()
     }
   }
 
-  if( this.orientation < - Math.PI )
+  if( this.orientation < 0 )
   {
-    this.orientation = this.orientation + 2 * Math.PI;
+    this.orientation = 2 * Math.PI + this.orientation;
   }
-  else if( this.orientation > Math.PI )
+  else if( this.orientation > 2 * Math.PI )
   {
-    this.orientation = this.orientation - ( 2 * Math.PI );
+    this.orientation = this.orientation - 2 * Math.PI;
   }
 
   if( this.checkPoints.length > 0 )
