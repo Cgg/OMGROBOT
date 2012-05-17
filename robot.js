@@ -113,14 +113,7 @@ Robot.prototype.updatePosition = function()
     }
   }
 
-  if( this.orientation < 0 )
-  {
-    this.orientation = 2 * Math.PI + this.orientation;
-  }
-  else if( this.orientation > 2 * Math.PI )
-  {
-    this.orientation = this.orientation - 2 * Math.PI;
-  }
+  this.orientation = loopAngle( this.orientation );
 
   if( this.checkPoints.length > 0 )
   {
@@ -131,6 +124,7 @@ Robot.prototype.updatePosition = function()
     var tg = this.checkPoints[ 0 ];
 
     var alpha_tg = - Math.atan2( this.origin.y - tg.y, tg.x - this.origin.x );
+    alpha_tg = loopAngle( alpha_tg );
 
     var dalpha = alpha_tg - this.orientation;
 
