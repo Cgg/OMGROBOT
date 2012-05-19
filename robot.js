@@ -126,6 +126,12 @@ Robot.prototype.updatePosition = function()
 
     var dalpha = alpha_tg - this.orientation;
 
+    // adapt dalpha so that the robot always take the shortest way to turn
+    if( dalpha < - Math.PI )
+      dalpha = 2 * Math.PI + dalpha;
+    else if( dalpha > Math.PI )
+      dalpha = - 2 * Math.PI + dalpha;
+
     var dd = Math.sqrt( Math.pow( this.origin.x - tg.x, 2 ) +
                         Math.pow( this.origin.y - tg.y, 2 ) );
 
