@@ -94,36 +94,23 @@ Robot.prototype.update = function()
 
 Robot.prototype.updatePosition = function()
 {
-  if( ( this.leftPw != this.rightPw ) && ( this.leftPw != -this.rightPw ) )
+  // we update robot's position only if the motors are running, obviously...
+  if( this.leftPw != 0 || this.rightPw != 0 )
   {
-    var leftSpeed  = this.leftPw * Robot.wheelMaxSpeed;
-    var rightSpeed = this.rightPw * Robot.wheelMaxSpeed;
+    // first the special cases
 
-    var originSpeed = ( leftSpeed + rightSpeed ) / 2;
-    var radius      = ( Robot.width / 2 ) *
-                      ( ( leftSpeed + rightSpeed ) / ( rightSpeed - leftSpeed ) );
-
-    var x_o = this.origin.x + radius * Math.sin( this.orientation );
-    var y_o = this.origin.y - radius * Math.cos( this.orientation );
-
-    var dtheta = ( originSpeed / radius ) * Robot.dtUpdate;
-
-    this.orientation -= dtheta;
-
-    // here we use the updated orientation
-    this.origin.x = x_o - radius * Math.sin( this.orientation );
-    this.origin.y = y_o + radius * Math.cos( this.orientation );
-  }
-  else if( this.leftPw != 0 )
-  {
-    if( this.rightPw == - this.leftPw )
+    // motors running in opposite directions (robot turning w/o moving)
+    if( this.leftPw == - this.rightPw )
     {
-      // special case to handle
+      // we use left wheel data but it would be the same with the right
       var speed = this.leftPw * Robot.wheelMaxSpeed;
       var dtheta = ( speed / ( Robot.width / 2 ) ) * Robot.dtUpdate;
       this.orientation += dtheta;
+
+      this.orientation = loopAngle( this.orientation );
     }
-    else
+    // motors running at the same level (robot going straight)
+    else if( this.leftPw == this.rightPw )
     {
       var speed  = this.leftPw * Robot.wheelMaxSpeed;
       var d      = speed * Robot.dtUpdate;
@@ -131,9 +118,29 @@ Robot.prototype.updatePosition = function()
       this.origin.x = this.origin.x + d * Math.cos( this.orientation );
       this.origin.y = this.origin.y + d * Math.sin( this.orientation );
     }
-  }
+    // general case, none of the above
+    else
+    {
+      var leftSpeed  = this.leftPw * Robot.wheelMaxSpeed;
+      var rightSpeed = this.rightPw * Robot.wheelMaxSpeed;
 
-  this.orientation = loopAngle( this.orientation );
+      var originSpeed = ( leftSpeed + rightSpeed ) / 2;
+      var radius      = ( Robot.width / 2 ) *
+                        ( ( leftSpeed + rightSpeed ) / ( rightSpeed - leftSpeed ) );
+
+      var x_o = this.origin.x + radius * Math.sin( this.orientation );
+      var y_o = this.origin.y - radius * Math.cos( this.orientation );
+
+      var dtheta = ( originSpeed / radius ) * Robot.dtUpdate;
+
+      this.orientation -= dtheta;
+      this.orientation = loopAngle( this.orientation );
+
+      // here we use the updated orientation
+      this.origin.x = x_o - radius * Math.sin( this.orientation );
+      this.origin.y = y_o + radius * Math.cos( this.orientation );
+    }
+  }
 }
 
 Robot.prototype.updateCommand = function()
