@@ -67,3 +67,14 @@ Vector.prototype.GetNorm = function()
   return Math.sqrt( Math.pow( this.x, 2 ) + Math.pow( this.y, 2 ) );
 };
 
+loopAngle = function( angle )
+{
+  angle = angle % ( 2 * Math.PI );
+
+  if( angle < 0 )
+  {
+    return 2 * Math.PI + angle;
+  }
+  else
+    return angle;
+}

@@ -27,11 +27,20 @@ function Robot( firstOrigin, firstOrientation )
   // where to go
   this.checkPoints = [];
 
+  // how to go there
+  // since we calculate deltas with regards to the current target, the
+  // controller's targets are set to 0 (where we want the deltas to go).
+  this.distanceControl = new PID( 0.5, 0, 7, 0, 0 );
+  this.angleControl    = new PID( 5, 0, 7, 0, 0 );
+
   setInterval( Delegate( this, this.updatePosition ), Robot.dtUpdate );
 
   this.divRX = document.getElementById( "robotX" );
   this.divRY = document.getElementById( "robotY" );
   this.divRA = document.getElementById( "robotA" );
+
+  this.divRL = document.getElementById( "robotLMotor" );
+  this.divRR = document.getElementById( "robotRMotor" );
 
   this.divTX = document.getElementById( "targetX" );
   this.divTY = document.getElementById( "targetY" );
@@ -105,15 +114,7 @@ Robot.prototype.updatePosition = function()
     }
   }
 
-  // make sure the orientation stays within a reasonnable range
-  if( this.orientation < - Math.PI )
-  {
-    this.orientation = this.orientation + 2 * Math.PI;
-  }
-  else if( this.orientation > Math.PI )
-  {
-    this.orientation = this.orientation - ( 2 * Math.PI );
-  }
+  this.orientation = loopAngle( this.orientation );
 
   // now, if we have a list of points to go through, go to the first of it.
   if( this.checkPoints.length > 0 )
@@ -121,25 +122,37 @@ Robot.prototype.updatePosition = function()
     var tg = this.checkPoints[ 0 ];
 
     var alpha_tg = - Math.atan2( this.origin.y - tg.y, tg.x - this.origin.x );
+    alpha_tg = loopAngle( alpha_tg );
 
     var dalpha = alpha_tg - this.orientation;
 
     var dd = Math.sqrt( Math.pow( this.origin.x - tg.x, 2 ) +
                         Math.pow( this.origin.y - tg.y, 2 ) );
 
-    var p_lin = Math.atan( dd / 20 ) / ( Math.PI / 2 );
-    var angularCoeff = ((dalpha > 0 ? -1:1)*2*dalpha)/Math.PI + 1;
-    var p_l   = p_lin * ( dalpha < 0 ? angularCoeff : 1 );
-    var p_r   = p_lin * ( dalpha > 0 ? angularCoeff : 1 );
-    this.setLeftPw( p_l );
-    this.setRightPw( p_r );
+    // update the controllers and use their outputs.
+    var distanceCommand = this.distanceControl.updateFeedback( - dd / 10 );
+    var angleCommand    = this.angleControl.updateFeedback( dalpha / Math.PI );
 
-    // if we are getting close to the target, trigger the corresponding events.
-    if( dd < 5 )
+    distanceCommand = distanceCommand > 1  ? 1  :
+                      distanceCommand < -1 ? -1 : distanceCommand;
+
+    var leftCommand  = distanceCommand - angleCommand;
+    var rightCommand = distanceCommand + angleCommand;
+
+    leftCommand = leftCommand > 1  ? 1  :
+                  leftCommand < -1 ? -1 : leftCommand;
+
+    rightCommand = rightCommand > 1  ? 1  :
+                   rightCommand < -1 ? -1 : rightCommand;
+
+    this.setLeftPw( leftCommand );
+    this.setRightPw( rightCommand );
+
+    if( dd < 2 )
     {
       this.isAtTarget();
     }
-    else if( dd < 60 )
+    else if( dd < 20 )
     {
       this.isNearTarget();
     }
@@ -160,6 +173,10 @@ Robot.prototype.updatePosition = function()
   this.divRX.innerText = this.origin.x;
   this.divRY.innerText = this.origin.y;
   this.divRA.innerText = this.orientation * 180 / Math.PI;
+
+  // show the robot's motor input levels on the html page
+  this.divRL.innerText = this.leftPw;
+  this.divRR.innerText = this.rightPw;
 };
 
 

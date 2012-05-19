@@ -9,6 +9,8 @@
   </script>
   <script type="text/javascript" src="main.js">
   </script>
+  <script type="text/javascript" src="pid.js">
+  </script>
   <script type="text/javascript" src="robot.js">
   </script>
   <script type="text/javascript" src="2dGeometry.js">
@@ -32,17 +34,35 @@
   <div>Robot's Position</div>
   <table id="robotPanel">
     <tr>
-      <td>X</td>
-      <td id="robotX">0</td>
-    </tr>
-    <tr>
-      <td>Y</td>
-      <td id="robotY">0</td>
-    </tr>
-    <tr>
-      <td>Alpha</td>
-      <td id="robotA">0</td>
-    </tr>
+      <td>
+        <table id="robotSituation">
+          <tr>
+            <td>X</td>
+            <td id="robotX">0</td>
+          </tr>
+          <tr>
+            <td>Y</td>
+            <td id="robotY">0</td>
+          </tr>
+          <tr>
+            <td>Alpha</td>
+            <td id="robotA">0</td>
+          </tr>
+        </table>
+      </td>
+      <td>
+        <table id="robotMotors">
+          <tr>
+            <td >Left Motor</td>
+            <td id="robotLMotor">0</td>
+          </tr>
+          <tr>
+            <td >Right Motor</td>
+            <td id="robotRMotor">0</td>
+          </tr>
+        </table>
+      </td>
+  </tr>
   </table>
 
   <br>
