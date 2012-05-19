@@ -11,6 +11,7 @@ Robot.color         = "#FF0000"
 Robot.nearColor     = "#FF9100"
 Robot.atColor       = "#00FF00"
 
+
 /* build a robot, given its point of origin and its first orientation */
 function Robot( firstOrigin, firstOrientation )
 {
@@ -33,7 +34,7 @@ function Robot( firstOrigin, firstOrientation )
   this.distanceControl = new PID( 0.5, 0, 7, 0, 0 );
   this.angleControl    = new PID( 5, 0, 7, 0, 0 );
 
-  setInterval( Delegate( this, this.updatePosition ), Robot.dtUpdate );
+  setInterval( Delegate( this, this.update ), Robot.dtUpdate );
 
   this.divRX = document.getElementById( "robotX" );
   this.divRY = document.getElementById( "robotY" );
@@ -72,9 +73,27 @@ Robot.prototype.goThrough = function( points )
 /* Update the robot's position and orientation given the wheels speeds.
  * If a target is set, asservissment occurs
  */
-Robot.prototype.updatePosition = function()
+Robot.prototype.update = function()
 {
   // first uppdate robot's position and orientation
+  this.updatePosition();
+
+  // now update robot's command
+  this.updateCommand();
+
+  // show the robot's coordinates on the html page
+  this.divRX.innerText = this.origin.x;
+  this.divRY.innerText = this.origin.y;
+  this.divRA.innerText = this.orientation * 180 / Math.PI;
+
+  // show the robot's motor input levels on the html page
+  this.divRL.innerText = this.leftPw;
+  this.divRR.innerText = this.rightPw;
+};
+
+
+Robot.prototype.updatePosition = function()
+{
   if( ( this.leftPw != this.rightPw ) && ( this.leftPw != -this.rightPw ) )
   {
     var leftSpeed  = this.leftPw * Robot.wheelMaxSpeed;
@@ -115,8 +134,10 @@ Robot.prototype.updatePosition = function()
   }
 
   this.orientation = loopAngle( this.orientation );
+}
 
-  // now, if we have a list of points to go through, go to the first of it.
+Robot.prototype.updateCommand = function()
+{
   if( this.checkPoints.length > 0 )
   {
     var tg = this.checkPoints[ 0 ];
@@ -174,16 +195,7 @@ Robot.prototype.updatePosition = function()
     this.divTA.innerText = Math.floor( dalpha * 180 / Math.PI );
     this.divTD.innerText = Math.floor( dd );
   }
-
-  // show the robot's coordinates on the html page
-  this.divRX.innerText = this.origin.x;
-  this.divRY.innerText = this.origin.y;
-  this.divRA.innerText = this.orientation * 180 / Math.PI;
-
-  // show the robot's motor input levels on the html page
-  this.divRL.innerText = this.leftPw;
-  this.divRR.innerText = this.rightPw;
-};
+}
 
 
 /* robot's event handlers
