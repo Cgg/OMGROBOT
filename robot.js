@@ -6,7 +6,7 @@
 /* Constants relative to the robot */
 Robot.wheelMaxSpeed = 40;  // pixels/second
 Robot.width         = 40;  // pixels
-Robot.dtUpdate      = 1 / 100 ; // s
+Robot.dtUpdate      = 1 / 30 ; // s
 Robot.color         = "#FF0000"
 Robot.nearColor     = "#FF9100"
 Robot.atColor       = "#00FF00"
@@ -34,7 +34,7 @@ function Robot( firstOrigin, firstOrientation )
   this.distanceControl = new PID( 0.5, 0, 7, 0, 0 );
   this.angleControl    = new PID( 5, 0, 7, 0, 0 );
 
-  setInterval( Delegate( this, this.update ), Robot.dtUpdate );
+  setInterval( Delegate( this, this.update ), Robot.dtUpdate * 1000 );
 
   this.divRX = document.getElementById( "robotX" );
   this.divRY = document.getElementById( "robotY" );
