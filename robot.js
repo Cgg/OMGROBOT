@@ -1,6 +1,8 @@
 /* Robot
  *
  * Defines the robot and its behavior, as well as the drawing on the canvas.
+ *
+ * A robot is build given its point of origin and its orientation
  */
 
 /* Constants relative to the robot */
