@@ -6,9 +6,9 @@
  */
 
 /* Constants relative to the robot */
-Robot.wheelMaxSpeed = 40;  // pixels/second
+Robot.wheelMaxSpeed = 80;  // pixels/second
 Robot.width         = 40;  // pixels
-Robot.dtUpdate      = 1 / 30 ; // s
+Robot.dtUpdate      = 1 / 100 ; // s
 Robot.color         = "#FF0000"
 Robot.nearColor     = "#FF9100"
 Robot.atColor       = "#00FF00"
@@ -33,7 +33,7 @@ function Robot( firstOrigin, firstOrientation )
   // how to go there
   // since we calculate deltas with regards to the current target, the
   // controller's targets are set to 0 (where we want the deltas to go).
-  this.distanceControl = new PID( 0.5, 0, 7, 0, 0 );
+  this.distanceControl = new PID( 1, 0, 0, 0, 0 );
   this.angleControl    = new PID( 5, 0, 7, 0, 0 );
 
   setInterval( Delegate( this, this.update ), Robot.dtUpdate * 1000 );
@@ -166,7 +166,7 @@ Robot.prototype.updateCommand = function()
                         Math.pow( this.origin.y - tg.y, 2 ) );
 
     // update the controllers and use their outputs.
-    var distanceCommand = this.distanceControl.updateFeedback( - dd / 10 );
+    var distanceCommand = this.distanceControl.updateFeedback( - dd );
     var angleCommand    = this.angleControl.updateFeedback( dalpha / Math.PI );
 
     distanceCommand = distanceCommand > 1  ? 1  :
