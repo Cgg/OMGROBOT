@@ -15,9 +15,8 @@ Other modules could be added in the future (e.g. bumpers or proximity sensor)
 How to control the robot
 ------------------------
 
-*To do* :
  - low level API : done
- - GoTo, GoThrough : _to do_
+ - GoTo, GoThrough
 
 Direct access to the motors
 ===========================
@@ -42,18 +41,12 @@ Alternatively, the user can control the robot through two other functions :
 
 The names speak for themselves.
 
-As for the point, it is a simple class with two fields, `x` and `y`, which
-again speak for themselves. It is defined in the file `2dGeometry.js`
-
-The control function meant to achieve the functionality of simply designating a
-point to the robot, and letting it go there, is yet to be designed. The user
-will be encouraged to change it if he/she feels the need.
+As for the point, it is a simple class with two fields, `x` and `y`. It is
+defined in the file `2dGeometry.js`
 
 
 Odometry
 --------
-
-*ToDo* : done
 
 The robot's odometry is implemented following this [Wikipedia
 page](http://fr.wikipedia.org/wiki/Odom%C3%A9trie "sorry for the french").
@@ -69,9 +62,6 @@ These parameters are updated every 10ms.
 Representation
 --------------
 
-*To do* :
- - Robot.draw : done
- - rest of the world (grid, axis, robot's info panel) : _to do_
 
 The robot is schematically drawn in a canvas.
 
@@ -86,4 +76,4 @@ Robot's control from the user point of view
 *To do* :
  - binding with the keyboard's arrows : done
  - joystick : _to do_
- - mouse (path drawing) : _to do_
+ - mouse (path drawing) : done
