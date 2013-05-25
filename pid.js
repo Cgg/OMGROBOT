@@ -46,7 +46,7 @@ PID.prototype.setReference = function( newRef )
 {
   this.reference = newRef;
 
-  // since the reference changed, must reeet the I term.
+  // since the reference changed, must reset the I term.
   this.ITermN = 0;
 };
 
