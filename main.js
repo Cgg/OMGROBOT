@@ -53,7 +53,9 @@ init = function()
 // the user started to draw the graph
 onStartGraph = function()
 {
+  // this is just so that the graph starts from the robot and looks nice.
   graph.insertNode( robot.origin, 0 );
+  // this disable manual control of the robot
   clearInterval( userInput );
   robot.setLeftPw( 0 );
   robot.setRightPw( 0 );
@@ -62,7 +64,6 @@ onStartGraph = function()
 // the user stopped to draw the graph
 onStopGraph = function()
 {
-  // TODO send the node list to the robot
   robot.goThrough( graph.graphNodes() );
 };
 
@@ -76,6 +77,9 @@ onEndOfTrajectory = function()
 };
 
 
+/* This function basically looks at the keyboard state. It is meant to be called
+ * regurlarly.
+ */
 getUserInput = function()
 {
   var l = 0;
