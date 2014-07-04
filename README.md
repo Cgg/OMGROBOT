@@ -1,79 +1,27 @@
-RUR
----
-
-This little thing is named after the 1920 theater play from Karel Čapek,
-Rossum's Universal Robots.
-
-The project's goal is to simulate a simple robot, featuring :
-
- - two motors whose radial speed can be set
- - odometry without the hassle
-
-Other modules could be added in the future (e.g. bumpers or proximity sensor)
-
-
-How to control the robot
-------------------------
-
- - low level API : done
- - GoTo, GoThrough
-
-Direct access to the motors
-===========================
-
-The motors can be controlled directly through these functions :
-
- - `SetLeftPw( float )`
- - `SetRightPw( float )`
-
-The motors will then run until another command stopping them is issued. The
-single argument is the power percentage to be used, and it can range from 0
-(motor stopped) to 1 (motor at maximum power). Speed corresponding to full power
-can be adjusted in the configuration file.
-
-Higher level API
-================
-
-Alternatively, the user can control the robot through two other functions :
-
- - GoTo( point )
- - GoThrough( PointsList )
-
-The names speak for themselves.
-
-As for the point, it is a simple class with two fields, `x` and `y`. It is
-defined in the file `2dGeometry.js`
-
-
-Odometry
+OMGROBOT
 --------
 
-The robot's odometry is implemented following this [Wikipedia
-page](http://fr.wikipedia.org/wiki/Odom%C3%A9trie "sorry for the french").
+What's that
+===========
 
-The robot's position is described by two parameters :
+The goal of this project was to experiment with feedback loop based on polar
+coordinates.
 
- - its center's position, a point (cf. up there)
- - its nose's orientation, in radians.
-
-These parameters are updated every 10ms.
-
-
-Representation
---------------
+A basic robot simulation is drawn in a canvas. The robot can be controlled directly
+with the keyboard arrows, or be given a list of point to go through. In this
+later mode, the robot uses a feedback loop based on its polar coordinates and
+two PID controllers.
 
 
-The robot is schematically drawn in a canvas.
+How to
+======
 
-The user can plan its path by drawing it, and has a visual feedback of the
-motors power levels through two sliders. He can also directly control the robot
-using a joystick or the keyboard's arrows.
+Use your keyboard arrows to make the robot move around, or click around to
+define the checkpoints of the trajectory (right click will terminate the
+trajectory and the robot will start moving).
 
 
-Robot's control from the user point of view
--------------------------------------------
+Try it
+======
 
-*To do* :
- - binding with the keyboard's arrows : done
- - joystick : _to do_
- - mouse (path drawing) : done
+[here.](http://cgg.github.io/omgrobot)
