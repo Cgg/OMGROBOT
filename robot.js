@@ -84,13 +84,13 @@ Robot.prototype.update = function()
   this.updateCommand();
 
   // show the robot's coordinates on the html page
-  this.divRX.innerText = this.origin.x;
-  this.divRY.innerText = this.origin.y;
-  this.divRA.innerText = this.orientation * 180 / Math.PI;
+  this.divRX.innerHTML = this.origin.x;
+  this.divRY.innerHTML = this.origin.y;
+  this.divRA.innerHTML = this.orientation * 180 / Math.PI;
 
   // show the robot's motor input levels on the html page
-  this.divRL.innerText = this.leftPw;
-  this.divRR.innerText = this.rightPw;
+  this.divRL.innerHTML = this.leftPw;
+  this.divRR.innerHTML = this.rightPw;
 };
 
 
@@ -199,10 +199,10 @@ Robot.prototype.updateCommand = function()
 
     // show the current target's coordinate on the html page, as well as our
     // situation with regard to it.
-    this.divTX.innerText = tg.x;
-    this.divTY.innerText = tg.y;
-    this.divTA.innerText = Math.floor( dalpha * 180 / Math.PI );
-    this.divTD.innerText = Math.floor( dd );
+    this.divTX.innerHTML = tg.x;
+    this.divTY.innerHTML = tg.y;
+    this.divTA.innerHTML = Math.floor( dalpha * 180 / Math.PI );
+    this.divTD.innerHTML = Math.floor( dd );
   }
 }
 
