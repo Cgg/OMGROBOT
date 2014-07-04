@@ -6,8 +6,8 @@
 
 function Keyboard( domElem )
 {
-  domElem.addEventListener( "keydown", Delegate( this, this.onKeyDown ), false );
-  domElem.addEventListener( "keyup", Delegate( this, this.onKeyUp ), false );
+  domElem.addEventListener( "keydown", eDelegate( this, this.onKeyDown ), false );
+  domElem.addEventListener( "keyup", eDelegate( this, this.onKeyUp ), false );
 
   this.pressed = {};
 };
