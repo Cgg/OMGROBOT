@@ -24,4 +24,4 @@ trajectory and the robot will start moving).
 Try it
 ======
 
-[here.](http://cgg.github.io/omgrobot)
+[here.](http://cgg.github.io/OMGROBOT)
